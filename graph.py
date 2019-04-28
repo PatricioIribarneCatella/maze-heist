@@ -27,29 +27,96 @@ class MazeGraph():
 
         return neighbours
     
-    def getAdjacencyList(self, position):
+    def _getAdjacencyList(self, position):
         i, j = position
+        print("a", i,j)
         return self.adjacency_lists[i][j]
+
+    def canGo(self, _from, _to):
+        # _toI, _toJ = _to
+        # if _toI < 0 or _toI >= self.height or _toJ < 0 or _toJ > self.width:
+        #     return False
+        
+        return _to in self._getAdjacencyList(_from)
 
     def _addWall(self, position, otherPosition):
         try:
-            self.getAdjacencyList(position).remove(otherPosition)
+            self._getAdjacencyList(position).remove(otherPosition)
         except:
             pass
         try:
-            self.getAdjacencyList(otherPosition).remove(position)
+            self._getAdjacencyList(otherPosition).remove(position)
         except:
             pass
     
     def _removeWall(self, position, otherPosition):
-        if otherPosition not in self.getAdjacencyList(position):
-            self.getAdjacencyList(position).append(otherPosition)
-        if position not in self.getAdjacencyList(otherPosition):
-            self.getAdjacencyList(otherPosition).append(position)
+        if otherPosition not in self._getAdjacencyList(position):
+            self._getAdjacencyList(position).append(otherPosition)
+        if position not in self._getAdjacencyList(otherPosition):
+            self._getAdjacencyList(otherPosition).append(position)
 
+    def toString(self):
+        # Pairs are where walls or paths are going to be
+        charMatrix = [
+            [self._getAPrioriCharacter((i, j)) for j in range(self.width * 2 + 1)] 
+            for i in range(self.height * 2 + 1)]
+
+        for i in range(self.height):
+            for j in range(self.width):
+                currentPosition = (i, j)
+                bottomPosition = (i + 1, j)
+                rightPosition = (i, j + 1)
+
+                # Bottom 
+                if self.canGo(currentPosition, bottomPosition):
+                    iInMatrix, jInMatrix = self._intermediateCell(currentPosition, bottomPosition)
+                    print (iInMatrix)
+                    print (jInMatrix)
+                    charMatrix[iInMatrix][jInMatrix] = "-"
+
+                # Right
+                if self.canGo(currentPosition, rightPosition):
+                    iInMatrix, jInMatrix = self._intermediateCell(currentPosition, rightPosition)
+                    charMatrix[iInMatrix][jInMatrix] = "|"
+
+        lines = map(lambda x: "".join(x), charMatrix)
+
+        return "\n".join(lines)
+ 
+    # Expected neighbours, undefined behaviour if not
+    def _intermediateCell(self, position, otherPosition):
+        i, j = position
+        otherI, otherJ = otherPosition
+        deltaI, deltaJ = (otherI - i, otherJ - j)
+        print (i, j, deltaI, deltaJ)
+        return i * 2 + 1 + deltaI, j * 2 + 1 + deltaJ
+
+    def _getAPrioriCharacter(self, positionInMatrix):
+        i, j = positionInMatrix
+
+        # Start
+        if i == 0 and j == 1:
+            return " "
+
+        # Finish
+        if i == self.height * 2 and j == self.width * 2 - 1 :
+            return " "
+
+        # Iterjection
+        if j % 2 == 0 and i % 2 == 0:
+            return "+"
+        # Horizontal walls
+        if i == 0 or i == self.height * 2:
+            return "-"
+        # Vertical wall
+        if j == 0 or j == self.width * 2:
+            return "|"        
+        return " "
 
 if __name__ == '__main__':
-    a = MazeGraph(3,3).adjacency_lists
+    a = MazeGraph(30,30)
 
-    for l in a:
-        print(l)
+    # for l in a:
+    #     print(l)
+
+    print(a.toString())

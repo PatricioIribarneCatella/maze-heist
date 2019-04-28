@@ -4,7 +4,8 @@ from graph import MazeGraph
 
 class DACMaze(MazeGraph):
     def create(self):
-        self._create(self, 0, self.width, 0, self.height)
+        self._create(0, self.width - 1, 0, self.height - 1) #Esto esta mal creo Revisar
+        
 
     def _create(self, startWidth, finishWidth, startHeight, finishHeight):
         if (startWidth == finishWidth or startHeight == finishHeight ):
@@ -25,22 +26,33 @@ class DACMaze(MazeGraph):
 
     def _blockRight(self, blockingWidth, blockingHeight, startHeight, finishHeight):
         
-        for height in range(startHeight, finishHeight + 1): # Block everything
-            self._addWall(self, (height, blockingWidth), (height, blockingWidth + 1))
+        for height in range(startHeight, finishHeight): # Block everything
+            self._addWall((height, blockingWidth), (height, blockingWidth + 1))
 
         heightAccessTop = random.randint(startHeight, blockingHeight) # Make first "half" hole MAYBE UNNECESSARY
-        self._removeWall(self, (heightAccessTop, blockingWidth), (heightAccessTop, blockingWidth + 1))
+        self._removeWall((heightAccessTop, blockingWidth), (heightAccessTop, blockingWidth + 1))
 
         heightAccessBottom = random.randint(blockingHeight + 1, finishHeight) # Make second "half" hole
-        self._removeWall(self, (heightAccessBottom, blockingWidth), (heightAccessBottom, blockingWidth + 1))
+        self._removeWall((heightAccessBottom, blockingWidth), (heightAccessBottom, blockingWidth + 1))
 
     def _blockBottom(self, blockingWidth, blockingHeight, startWidth, finishWidth):
         
-        for width in range(startWidth, finishWidth + 1): # Block everything
-            self._addWall(self, (blockingHeight, width), (blockingHeight + 1, width)):
+        for width in range(startWidth, finishWidth): # Block everything
+            self._addWall((blockingHeight, width), (blockingHeight + 1, width))
 
         widthAccessLeft = random.randint(startWidth, blockingWidth) # Make first "half" hole
-        self._removeWall(self, (blockingHeight, accessTop), (blockingHeight + 1, accessTop))
+        self._removeWall((blockingHeight, widthAccessLeft), (blockingHeight + 1, widthAccessLeft))
 
-        widthAccessRight = random.randint(blockingWidth, finishWidth) # Make second "half" hole
-        self._removeWall(self, (blockingHeight, widthAccessRight), (blockingHeight + 1, widthAccessRight))
+        widthAccessRight = random.randint(blockingWidth + 1, finishWidth) # Make second "half" hole
+        print (blockingHeight, widthAccessRight)
+        self._removeWall((blockingHeight, widthAccessRight), (blockingHeight + 1, widthAccessRight))
+
+if __name__ == '__main__':
+    a = DACMaze(30,30)
+
+    a.create()
+
+    # for l in a:
+    #     print(l)
+
+    print(a.toString())
