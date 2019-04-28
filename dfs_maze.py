@@ -30,7 +30,7 @@ class DFSMaze(MazeGraph):
 
         for t in neighbours:
             if not visited[t]:
-                self._addWall(position, t)
+                self._removeWall(position, t)
                 self._dfs_circuit(t, visited, res)
 
 if __name__ == '__main__':
