@@ -3,16 +3,14 @@ class MazeGraph():
     adjacency_lists = None
     height = None
     width = None
+
     def __init__(self, width, height):
         self.width = width
         self.height = height
-        self.adjacency_lists = [ [self._neighbours_of((i,j)) for j in range(width)] for i in range(height)] 
+        self.adjacency_lists = [[self._neighbours_of((i,j)) for j in range(width)] for i in range(height)] 
 
-    # def _position_in_array(self, position):
-    #     i, j = position
-    #     return i * self.width + j
-    
     def _neighbours_of(self, position):
+    
         i, j = position
         neighbours = []
         
@@ -32,10 +30,6 @@ class MazeGraph():
         return self.adjacency_lists[i][j]
 
     def canGo(self, _from, _to):
-        # _toI, _toJ = _to
-        # if _toI < 0 or _toI >= self.height or _toJ < 0 or _toJ > self.width:
-        #     return False
-        
         return _to in self._getAdjacencyList(_from)
 
     def _addWall(self, position, otherPosition):
@@ -49,8 +43,10 @@ class MazeGraph():
             pass
     
     def _removeWall(self, position, otherPosition):
+        
         if otherPosition not in self._getAdjacencyList(position):
             self._getAdjacencyList(position).append(otherPosition)
+        
         if position not in self._getAdjacencyList(otherPosition):
             self._getAdjacencyList(otherPosition).append(position)
 
@@ -69,8 +65,6 @@ class MazeGraph():
                 # Bottom 
                 if self.canGo(currentPosition, bottomPosition):
                     iInMatrix, jInMatrix = self._intermediateCell(currentPosition, bottomPosition)
-                    print (iInMatrix)
-                    print (jInMatrix)
                     charMatrix[iInMatrix][jInMatrix] = "-"
 
                 # Right
@@ -84,13 +78,15 @@ class MazeGraph():
  
     # Expected neighbours, undefined behaviour if not
     def _intermediateCell(self, position, otherPosition):
+        
         i, j = position
         otherI, otherJ = otherPosition
         deltaI, deltaJ = (otherI - i, otherJ - j)
-        print (i, j, deltaI, deltaJ)
+        
         return i * 2 + 1 + deltaI, j * 2 + 1 + deltaJ
 
     def _getAPrioriCharacter(self, positionInMatrix):
+        
         i, j = positionInMatrix
 
         # Start
@@ -104,18 +100,20 @@ class MazeGraph():
         # Iterjection
         if j % 2 == 0 and i % 2 == 0:
             return "+"
+        
         # Horizontal walls
         if i == 0 or i == self.height * 2:
             return "-"
+        
         # Vertical wall
         if j == 0 or j == self.width * 2:
             return "|"        
+        
         return " "
 
 if __name__ == '__main__':
-    a = MazeGraph(30,30)
-
-    # for l in a:
-    #     print(l)
+    
+    a = MazeGraph(10, 10)
 
     print(a.toString())
+

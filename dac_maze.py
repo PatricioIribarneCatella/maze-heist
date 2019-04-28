@@ -3,13 +3,15 @@ import random
 from graph import MazeGraph
 
 class DACMaze(MazeGraph):
+
     def create(self):
         self._create(0, self.width - 1, 0, self.height - 1)
 
-
     def _create(self, startWidth, finishWidth, startHeight, finishHeight):
+       
         if (startWidth == finishWidth or startHeight == finishHeight):
             return
+        
         # Where there will be walls
         divisorWidth = random.randrange(startWidth, finishWidth)
         divisorHeight = random.randrange(startHeight, finishHeight)
@@ -48,11 +50,10 @@ class DACMaze(MazeGraph):
         self._removeWall((blockingHeight, widthAccessRight), (blockingHeight + 1, widthAccessRight))
 
 if __name__ == '__main__':
-    a = DACMaze(30,30)
+
+    a = DACMaze(10, 10)
 
     a.create()
 
-    # for l in a:
-    #     print(l)
-
     print(a.toString())
+
