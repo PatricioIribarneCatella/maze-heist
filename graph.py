@@ -29,7 +29,6 @@ class MazeGraph():
     
     def _getAdjacencyList(self, position):
         i, j = position
-        print("a", i,j)
         return self.adjacency_lists[i][j]
 
     def canGo(self, _from, _to):

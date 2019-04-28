@@ -4,11 +4,11 @@ from graph import MazeGraph
 
 class DACMaze(MazeGraph):
     def create(self):
-        self._create(0, self.width - 1, 0, self.height - 1) #Esto esta mal creo Revisar
-        
+        self._create(0, self.width - 1, 0, self.height - 1)
+
 
     def _create(self, startWidth, finishWidth, startHeight, finishHeight):
-        if (startWidth == finishWidth or startHeight == finishHeight ):
+        if (startWidth == finishWidth or startHeight == finishHeight):
             return
         # Where there will be walls
         divisorWidth = random.randrange(startWidth, finishWidth)
@@ -21,12 +21,12 @@ class DACMaze(MazeGraph):
         # Divide
         self._create(startWidth, divisorWidth, startHeight, divisorHeight) #TopLeft
         self._create(divisorWidth + 1, finishWidth, startHeight, divisorHeight) #TopRight
-        self._create(startWidth, finishWidth, divisorHeight + 1, finishHeight) # BottomLeft
+        self._create(startWidth, divisorWidth, divisorHeight + 1, finishHeight) # BottomLeft
         self._create(divisorWidth + 1, finishWidth, divisorHeight + 1, finishHeight) # BottomRight
 
     def _blockRight(self, blockingWidth, blockingHeight, startHeight, finishHeight):
         
-        for height in range(startHeight, finishHeight): # Block everything
+        for height in range(startHeight, finishHeight + 1): # Block everything
             self._addWall((height, blockingWidth), (height, blockingWidth + 1))
 
         heightAccessTop = random.randint(startHeight, blockingHeight) # Make first "half" hole MAYBE UNNECESSARY
@@ -37,7 +37,7 @@ class DACMaze(MazeGraph):
 
     def _blockBottom(self, blockingWidth, blockingHeight, startWidth, finishWidth):
         
-        for width in range(startWidth, finishWidth): # Block everything
+        for width in range(startWidth, finishWidth + 1): # Block everything
             self._addWall((blockingHeight, width), (blockingHeight + 1, width))
 
         widthAccessLeft = random.randint(startWidth, blockingWidth) # Make first "half" hole
