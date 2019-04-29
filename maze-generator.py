@@ -45,9 +45,16 @@ def parse_input(params):
         print("Largo o Ancho incorrecto: deben ser números enteros")
         return None
 
+    height = int(height)
+    width = int(width)
+
+    if height <= 0 or width <= 0:
+        print("Largo o ancho inválido: deben ser enteros positivos")
+        return None
+
     return {"method": method,
-            "height": int(height),
-            "width": int(width)
+            "height": height,
+            "width": width
             }
 
 if __name__ == "__main__":

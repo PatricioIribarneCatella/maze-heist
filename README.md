@@ -5,7 +5,11 @@ Resolución del [TP2 de la materia TDA de la FIUBA](https://algoritmos-rw.github
 ### Run
 
 ```bash
- $ ./maze-generator.py [METODO] [LARGO] [ANCHO]
+ $ ./maze-generator.py METODO  LARGO  ANCHO
+	
+	METODO = ["dfs" | "dyc"]
+	LARGO = entero positivo
+	ANCHO = entero positivo
 ```
 
 ### Clean
