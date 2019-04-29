@@ -4,15 +4,13 @@ from graph import MazeGraph
 
 class DFSMaze(MazeGraph):
 
-    def create(self):
-        self._create(0, self.width - 1, 0, self.height - 1)
-
     def _create(self, startWidth, finishWidth, startHeight, finishHeight):
 
         visited = {(i, j):False for j in range(self.width) for i in range(self.height)}
 
         res = []
         self.adjacency_lists = [[[]for j in range(self.width)] for i in range(self.height)] # Nothing is accesible at first
+
         # Obtains the DFS circuit (tree)
         # while removing the edges (walls)
         # that connects two cells
@@ -33,4 +31,6 @@ class DFSMaze(MazeGraph):
                 self._removeWall(position, t)
                 self._dfs_circuit(t, visited, res)
 
+    def create(self):
+        self._create(0, self.width - 1, 0, self.height - 1)
 

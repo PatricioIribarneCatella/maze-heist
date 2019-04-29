@@ -29,7 +29,7 @@ class MazeGraph():
         i, j = position
         return self.adjacency_lists[i][j]
 
-    def canGo(self, _from, _to):
+    def _canGo(self, _from, _to):
         return _to in self._getAdjacencyList(_from)
 
     def _addWall(self, position, otherPosition):
@@ -49,32 +49,6 @@ class MazeGraph():
         
         if position not in self._getAdjacencyList(otherPosition):
             self._getAdjacencyList(otherPosition).append(position)
-
-    def toString(self):
-        # Pairs are where walls or paths are going to be
-        charMatrix = [
-            [self._getAPrioriCharacter((i, j)) for j in range(self.width * 2 + 1)] 
-            for i in range(self.height * 2 + 1)]
-
-        for i in range(self.height):
-            for j in range(self.width):
-                currentPosition = (i, j)
-                bottomPosition = (i + 1, j)
-                rightPosition = (i, j + 1)
-
-                # Bottom 
-                if not self.canGo(currentPosition, bottomPosition) and i < self.height - 1:
-                    iInMatrix, jInMatrix = self._intermediateCell(currentPosition, bottomPosition)
-                    charMatrix[iInMatrix][jInMatrix] = "-"
-
-                # Right
-                if not self.canGo(currentPosition, rightPosition) and j < self.width - 1:
-                    iInMatrix, jInMatrix = self._intermediateCell(currentPosition, rightPosition)
-                    charMatrix[iInMatrix][jInMatrix] = "|"
-
-        lines = map(lambda x: "".join(x), charMatrix)
-
-        return "\n".join(lines)
  
     # Expected neighbours, undefined behaviour if not
     def _intermediateCell(self, position, otherPosition):
@@ -110,6 +84,33 @@ class MazeGraph():
             return "|"        
         
         return " "
+
+    def toString(self):
+        # Pairs are where walls or paths are going to be
+        charMatrix = [
+            [self._getAPrioriCharacter((i, j)) for j in range(self.width * 2 + 1)] 
+            for i in range(self.height * 2 + 1)]
+
+        for i in range(self.height):
+            for j in range(self.width):
+                currentPosition = (i, j)
+                bottomPosition = (i + 1, j)
+                rightPosition = (i, j + 1)
+
+                # Bottom 
+                if not self._canGo(currentPosition, bottomPosition) and i < self.height - 1:
+                    iInMatrix, jInMatrix = self._intermediateCell(currentPosition, bottomPosition)
+                    charMatrix[iInMatrix][jInMatrix] = "-"
+
+                # Right
+                if not self._canGo(currentPosition, rightPosition) and j < self.width - 1:
+                    iInMatrix, jInMatrix = self._intermediateCell(currentPosition, rightPosition)
+                    charMatrix[iInMatrix][jInMatrix] = "|"
+
+        lines = map(lambda x: "".join(x), charMatrix)
+
+        return "\n".join(lines)
+
 
 if __name__ == '__main__':
     

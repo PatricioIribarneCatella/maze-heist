@@ -1,2 +1,2 @@
-rm -rf __pycache__/ mapa-laberinto.txt
+rm -rf __pycache__/ mapa-laberinto.txt laberinto-solucion.txt
 
