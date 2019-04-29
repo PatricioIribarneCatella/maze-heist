@@ -33,11 +33,4 @@ class DFSMaze(MazeGraph):
                 self._removeWall(position, t)
                 self._dfs_circuit(t, visited, res)
 
-if __name__ == '__main__':
-
-    a = DFSMaze(10, 10)
-    
-    a.create()
-
-    print(a.toString())
 
