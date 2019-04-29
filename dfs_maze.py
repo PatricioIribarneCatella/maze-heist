@@ -12,7 +12,7 @@ class DFSMaze(MazeGraph):
         visited = {(i, j):False for j in range(self.width) for i in range(self.height)}
 
         res = []
-
+        self.adjacency_lists = [[[]for j in range(self.width)] for i in range(self.height)] # Nothing is accesible at first
         # Obtains the DFS circuit (tree)
         # while removing the edges (walls)
         # that connects two cells
@@ -24,7 +24,7 @@ class DFSMaze(MazeGraph):
 
         visited[position] = True
 
-        neighbours = self._getAdjacencyList(position)
+        neighbours = self._neighbours_of(position)
 
         random.shuffle(neighbours)
 
@@ -36,7 +36,7 @@ class DFSMaze(MazeGraph):
 if __name__ == '__main__':
 
     a = DFSMaze(10, 10)
-
+    
     a.create()
 
     print(a.toString())

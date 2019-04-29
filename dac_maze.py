@@ -46,13 +46,12 @@ class DACMaze(MazeGraph):
         self._removeWall((blockingHeight, widthAccessLeft), (blockingHeight + 1, widthAccessLeft))
 
         widthAccessRight = random.randint(blockingWidth + 1, finishWidth) # Make second "half" hole
-        print (blockingHeight, widthAccessRight)
         self._removeWall((blockingHeight, widthAccessRight), (blockingHeight + 1, widthAccessRight))
 
 if __name__ == '__main__':
 
     a = DACMaze(10, 10)
-
+    
     a.create()
 
     print(a.toString())

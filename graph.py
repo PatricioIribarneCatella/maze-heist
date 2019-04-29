@@ -63,12 +63,12 @@ class MazeGraph():
                 rightPosition = (i, j + 1)
 
                 # Bottom 
-                if not self.canGo(currentPosition, bottomPosition):
+                if not self.canGo(currentPosition, bottomPosition) and i < self.height - 1:
                     iInMatrix, jInMatrix = self._intermediateCell(currentPosition, bottomPosition)
                     charMatrix[iInMatrix][jInMatrix] = "-"
 
                 # Right
-                if not self.canGo(currentPosition, rightPosition):
+                if not self.canGo(currentPosition, rightPosition) and j < self.width - 1:
                     iInMatrix, jInMatrix = self._intermediateCell(currentPosition, rightPosition)
                     charMatrix[iInMatrix][jInMatrix] = "|"
 
