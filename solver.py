@@ -17,7 +17,7 @@ class MazeSolver(MazeGraph):
 
         self._fillWalls(lines)
 
-    def _fillHorizontalWalls(self, idx, line):
+    def _fillVerticalWalls(self, idx, line):
        
         # Find out which horizontal
         # row is
@@ -42,7 +42,7 @@ class MazeSolver(MazeGraph):
         for c in cells:
             self._addWall((idx, c - 1), (idx, c))
 
-    def _fillVerticalWalls(self, idx, line):
+    def _fillHorizontalWalls(self, idx, line):
         
         # Find out which vertical
         # row is.
@@ -90,10 +90,10 @@ class MazeSolver(MazeGraph):
             idx, line = l
 
             if line.startswith("|"):
-                self._fillHorizontalWalls(idx, line)
+                self._fillVerticalWalls(idx, line)
 
             if line.startswith("+"):
-                self._fillVerticalWalls(idx, line)
+                self._fillHorizontalWalls(idx, line)
 
     # Makes a BFS walk through the maze
     # to discover the minimum path
