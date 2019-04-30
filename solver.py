@@ -117,10 +117,11 @@ class MazeSolver(MazeGraph):
             t = q.popleft()
             visited[t] = True
 
-            if t == end:
-                found = True
-            else:
-                for w in self._getAdjacencyList(t):
+            for w in self._getAdjacencyList(t):
+                if w == end:
+                    found = True
+                    father[w] = t
+                else:
                     if not visited[w]:
                         father[w] = t
                         q.append(w)
@@ -153,7 +154,7 @@ class MazeSolver(MazeGraph):
     def solve(self):
        
         start = (0, 0)
-        end = (self.width - 1, self.height - 1)
+        end = (self.height - 1, self.width - 1)
 
         father = self._bfs_circuit(start, end)
 
@@ -165,6 +166,6 @@ class MazeSolver(MazeGraph):
 
         s = super(MazeSolver, self).toString()
 
-        return s + "\nLongitud: {}".format(len(self.path) + 1)
+        return s + "\nLongitud: {}".format(len(self.path))
 
 
