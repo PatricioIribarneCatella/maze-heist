@@ -68,7 +68,7 @@ class MazeGraph():
             return " "
 
         # Finish
-        if i == self.height * 2 and j == self.width * 2 - 1 :
+        if i == self.height * 2 and j == self.width * 2 - 1:
             return " "
 
         # Iterjection
@@ -85,7 +85,11 @@ class MazeGraph():
         
         return " "
 
+    def _belongsToPath(self, position):
+        return False
+    
     def toString(self):
+        
         # Pairs are where walls or paths are going to be
         charMatrix = [
             [self._getAPrioriCharacter((i, j)) for j in range(self.width * 2 + 1)] 
@@ -106,6 +110,11 @@ class MazeGraph():
                 if not self._canGo(currentPosition, rightPosition) and j < self.width - 1:
                     iInMatrix, jInMatrix = self._intermediateCell(currentPosition, rightPosition)
                     charMatrix[iInMatrix][jInMatrix] = "|"
+
+                # If 'currentPosition' belongs to the path
+                # replace the 'space' with a '*'
+                if self._belongsToPath(currentPosition):
+                    charMatrix[i * 2 + 1][j * 2 + 1] = "*"
 
         lines = map(lambda x: "".join(x), charMatrix)
 

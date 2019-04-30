@@ -5,7 +5,7 @@ import sys
 from solver import MazeSolver
 
 FILE_INPUT = "mapa-laberinto.txt"
-FILE_OUTPUT = "laberinto-solucion.txt"
+FILE_OUTPUT = "solucion-laberinto.txt"
 
 def write_maze(maze):
 

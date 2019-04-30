@@ -1,3 +1,4 @@
+from collections import deque
 from graph import MazeGraph
 
 class MazeSolver(MazeGraph):
@@ -94,7 +95,76 @@ class MazeSolver(MazeGraph):
             if line.startswith("+"):
                 self._fillVerticalWalls(idx, line)
 
+    # Makes a BFS walk through the maze
+    # to discover the minimum path
+    # from 'start' to 'end'
+    def _bfs_circuit(self, start, end):
+
+        visited = {(i, j):False for j in range(self.width) for i in range(self.height)}
+       
+        found = False
+        father = {}
+        q = deque()
+
+        for v in self._getAdjacencyList(start):
+            father[v] = start
+            q.append(v)
+
+        visited[start] = True
+
+        while len(q) > 0 and not found:
+            
+            t = q.popleft()
+            visited[t] = True
+
+            if t == end:
+                found = True
+            else:
+                for w in self._getAdjacencyList(t):
+                    if not visited[w]:
+                        father[w] = t
+                        q.append(w)
+
+        return father
+
+    # Reconstructs the path from
+    # 'end' to 'start' of the 
+    # BFS circuit
+    def _buildPath(self, father, start, end):
+
+        path = []
+
+        v = end
+
+        while v != start:
+
+            path.insert(0, v)
+            v = father[v]
+
+        path.insert(0, start)
+
+        return path
+
+    # Returns True if the 'position'
+    # belongs to the solving path or not
+    def _belongsToPath(self, position):
+        return position in self.path
+
     def solve(self):
-        print("not implemented")
-        
+       
+        start = (0, 0)
+        end = (self.width - 1, self.height - 1)
+
+        father = self._bfs_circuit(start, end)
+
+        path = self._buildPath(father, start, end)
+
+        self.path = path
+
+    def toString(self):
+
+        s = super(MazeSolver, self).toString()
+
+        return s + "\nLongitud: {}".format(len(self.path) + 1)
+
 
