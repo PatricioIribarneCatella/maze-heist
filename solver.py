@@ -10,7 +10,10 @@ class MazeSolver(MazeGraph):
 
         first = lines[0]
 
-        width = first.count("+") - 1
+        # Because of the '\n'
+        # substract one
+        width = (len(first) // 2) - 1
+        
         height = len(lines) // 2
 
         super(MazeSolver, self).__init__(width, height)
