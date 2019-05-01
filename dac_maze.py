@@ -4,9 +4,6 @@ from graph import MazeGraph
 
 class DACMaze(MazeGraph):
 
-    def create(self):
-        self._create(0, self.width - 1, 0, self.height - 1)
-
     def _create(self, startWidth, finishWidth, startHeight, finishHeight):
        
         if (startWidth == finishWidth or startHeight == finishHeight):
@@ -48,4 +45,6 @@ class DACMaze(MazeGraph):
         widthAccessRight = random.randint(blockingWidth + 1, finishWidth) # Make second "half" hole
         self._removeWall((blockingHeight, widthAccessRight), (blockingHeight + 1, widthAccessRight))
 
+    def create(self):
+        self._create(0, self.width - 1, 0, self.height - 1)
 
