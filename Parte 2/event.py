@@ -1,14 +1,21 @@
 class Event():
 
-	event = None
-	visitor = None
+    def __init__(self, event_type, name, time):
+        self._event_type = event_type
+        self._name = name
+        self._time = time
 
-	def __init__(self, event, visitor):
-		self.event = event
-		self.visitor = visitor
+    @property
+    def type(self):
+        return self._event_type
 
-	def get_event(self):
-		return self.event
+    @property
+    def visitor(self):
+        return self._name
 
-	def get_visitor(self):
-		return self.visitor
+    @property
+    def time(self):
+        return self._time
+
+    def __repr__(self):
+        return "({0}, {1}, {2})".format(self.visitor, self.type, self.time) 

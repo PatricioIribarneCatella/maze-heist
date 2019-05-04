@@ -1,50 +1,53 @@
-from collections import deque
+import csv
 from visitor import Visitor
+from visitors import Visitors
 from event import Event
+from event_type import EventType 
 
-def generate_list_sorted_by_arrival_time():
+def get_visitors_from_records_file(filename):
+    
+    with open(filename) as records_file:
+        records = csv.reader(records_file)
+        visitors = { record[0]: Visitor(*record) for record in records }
+        
+    return visitors
 
-	raw_visitors = open("visitors/%s" % file_visitors)
-	csv_visitors = csv.reader(raw_suspects)
+def generate_events(visitors):
 
-	visitors = []
+    events = []
 
-	for csv_visitor in csv_visitors:
-		name, arrival_time, duration = csv_visitor
-		visitor = Visitor(name, arrival_time, duration)
-		visitors.append(visitor)
+    for visitor in visitors.values():
+        arrival = Event(EventType.ARRIVAL, visitor.name, visitor.arrival_time)
+        departure = Event(EventType.DEPARTURE, visitor.name, visitor.departure_time)
+        events.extend([arrival, departure])
 
-	return visitoris
+    events.sort(key=lambda event: event.time, reverse=True)
 
-def generate_list_sorted_by_departure_time(visitors):
+    return events
 
-	return sorted(visitors, key=lambda visitor: visitor.get_departure_time())
+def find_suspects(min_ind, max_ind, min_dur, max_dur):
 
-def generate_event_list(arrival_times, departure_times):
-	events = []
-	while arrival_times or departure_times:
-		if arrival_times[0].get_arrival_time() < departure_times[0].get_departure_time():
-			element = Element("arrival", arrival_times.pop(0))
-			events.append(element)
-		else:
-			element = Element("departure", departure_times.pop(0))
-			events.append(element)
+    visitors = get_visitors_from_records_file("records.csv")
+    events = generate_events(visitors)
 
-def find_suspects():
+    possible_gangs = []
+    current_gang = Visitors() 
 
-	arrival_time_list = generate_list_sorted_by_arrival_time()
-	departure_time_list = generate_list_sorted_by_departure_time()
+    i = 0
+    while i < len(events):
+        current_time = events[i].time  
+        
+        while i < len(events) and events[i].time == current_time: 
+            event = events[i]
+            current_gang.add(visitors[event.visitor]) if event.type == EventType.DEPARTURE else current_gang.remove(visitors[event.visitor]) 
+            i += 1
 
-	events = generate_event_list()
+        if min_ind<=len(current_gang)<=max_ind and min_dur<=current_gang.duration<=max_dur: 
+            possible_gangs.append(current_gang.copy())
+       
+    return possible_gangs
 
-	visitors = Visitors()
 
-	possible_suspects_gangs = []
-
-	for element in events:
-		if element.get_event() == "arrival":
-			Visitors.add(element)
-	else:
-		if len(visitors) in range(5,10) and visitors.get_groups_duration(element.get_visitor()) in range(40, 120):
-			possible_suspects_gangs.append(visitors.get_copy())
-		visitors.remove(element)
+individuals_limits = [2,3]
+duration_limits = [1,2]
+print(find_suspects(*individuals_limits,*duration_limits))

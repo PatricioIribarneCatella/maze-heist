@@ -1,32 +1,30 @@
+from bintrees import AVLTree as bst 
+from event_type import EventType
+
 class Visitors():
 
-	visitors = None
-	earliest_arrival_visitor = None
+    def __init__(self): 
+        self._visitors = set()
+        self._departure_times = bst()
+        self._arrival_times = bst()
 
-	def __init__(self, event, visitor):
-		self.visitors = []
+    def __len__(self):
+        return len(self._visitors)
 
-	def __len__(self):
-		return len(self.visitors)
+    def copy(self):
+        return self._visitors.copy()
 
-	def get_copy():
-		return self.visitors.copy()
+    def add(self, visitor): 
+        self._visitors.add(visitor.name)
+        self._departure_times.insert(visitor.departure_key, visitor)
+        self._arrival_times.insert(visitor.arrival_key, visitor)
 
-	def add(self, visitor):
-		self.visitors.append(visitor)
-		if(visitor.get_arrival_time() < self.earliest_arrival_visitor.get_arrival_time()):
-			self.earliest_arrival_visitor = visitor
+    def remove(self, visitor): 
+        self._visitors.remove(visitor.name) 
+        self._departure_times.pop(visitor.departure_key) 
+        self._arrival_times.pop(visitor.arrival_key)
 
-	def remove(self, visitor):
-		self.visitors.append(visitor)
-		if(self.earliest_arrival_visitor == visitor):
-			self._find_new_earliest_arrival_visitor()
+    @property
+    def duration(self):
+        return self._departure_times.min_item()[1].departure_time - self._arrival_times.min_item()[1].arrival_time
 
-	def _find_new_earliest_arrival_visitor(self):
-		self.earliest_arrival_visitor = None
-		for visitor in visitors:
-			if not self.earliest_arrival_visitor or visitor.get_arrival_time() < self.earliest_arrival_visitor.get_arrival_time():
-				self.earliest_arrival_visitor = visitor
-
-	def get_groups_duration(visitor):
-		return (visitor.get_departure_time() - self.earliest_arrival_visitor)
