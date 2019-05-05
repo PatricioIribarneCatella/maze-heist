@@ -25,9 +25,9 @@ def generate_events(visitors):
 
     return events
 
-def find_suspects(min_ind, max_ind, min_dur, max_dur):
+def find_suspects(records_file, min_ind, max_ind, min_dur, max_dur):
 
-    visitors = get_visitors_from_records_file("records.csv")
+    visitors = get_visitors_from_records_file(records_file)
     events = generate_events(visitors)
 
     possible_gangs = []
@@ -37,12 +37,14 @@ def find_suspects(min_ind, max_ind, min_dur, max_dur):
     while i < len(events):
         current_time = events[i].time  
         
+        has_departure = False
         while i < len(events) and events[i].time == current_time: 
             event = events[i]
+            has_departure |= event.type == EventType.DEPARTURE
             current_gang.add(visitors[event.visitor]) if event.type == EventType.DEPARTURE else current_gang.remove(visitors[event.visitor]) 
             i += 1
 
-        if min_ind<=len(current_gang)<=max_ind and min_dur<=current_gang.duration<=max_dur: 
+        if has_departure and min_ind<=len(current_gang)<=max_ind and min_dur<=current_gang.duration<=max_dur: 
             possible_gangs.append(current_gang.copy())
        
     return possible_gangs
@@ -50,4 +52,4 @@ def find_suspects(min_ind, max_ind, min_dur, max_dur):
 
 individuals_limits = [2,3]
 duration_limits = [1,2]
-print(find_suspects(*individuals_limits,*duration_limits))
+print(find_suspects("records2.csv", *individuals_limits,*duration_limits))
