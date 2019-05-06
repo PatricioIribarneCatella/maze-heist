@@ -1,9 +1,12 @@
+#! /usr/bin/env python3
+
 import csv
+import sys
+
 from visitor import Visitor
 from visitors import Visitors
 from event import Event
 from event_type import EventType 
-import sys
 
 def get_visitors_from_records_file(filename):
     
@@ -27,8 +30,11 @@ def generate_events(visitors):
     return events
 
 def save_possible_gangs(possible_gangs, filename):
+
     with open(filename, "w") as gangs_file:
+        
         gangs = csv.writer(gangs_file)
+        
         for gang in possible_gangs:
             gangs.writerow(gang[0])
             gangs.writerow([gang[1]])
@@ -64,4 +70,8 @@ individuals_limits = [5,10]
 duration_limits = [40,120]
 
 if __name__ == "__main__":
-    find_suspects(sys.argv[1], "sospechosos.txt", *individuals_limits,*duration_limits)
+    find_suspects(sys.argv[1],
+                  "sospechosos.txt",
+                  *individuals_limits,
+                  *duration_limits)
+

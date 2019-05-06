@@ -23,3 +23,4 @@ class Visitor():
 
     def __repr__(self):
         return "({0},{1},{2})".format(self._name, self._arrival_time, self._departure_time)
+

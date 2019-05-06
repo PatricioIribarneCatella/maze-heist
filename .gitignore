@@ -1,3 +1,12 @@
-mapa-laberinto.txt
-solucion-laberinto.txt
-__pycache__/
+# Parte 1
+Parte-1/mapa-laberinto.txt
+Parte-1/solucion-laberinto.txt
+Parte-1/venv
+
+# Parte 2
+Parte-2/sospechosos.txt
+Parte-2/venv
+
+# PyCache
+Parte-1/__pycache__/
+Parte-2/__pycache__/
