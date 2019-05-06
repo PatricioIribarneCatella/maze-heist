@@ -1,3 +1,5 @@
+#! /usr/bin/env python3
+
 import csv
 import sys
 
@@ -28,8 +30,11 @@ def generate_events(visitors):
     return events
 
 def save_possible_gangs(possible_gangs, filename):
+
     with open(filename, "w") as gangs_file:
+        
         gangs = csv.writer(gangs_file)
+        
         for gang in possible_gangs:
             gangs.writerow(gang[0])
             gangs.writerow([gang[1]])
