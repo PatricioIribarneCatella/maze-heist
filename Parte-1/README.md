@@ -24,6 +24,9 @@ Resolución de la parte 1 del [TP2 de la materia TDA de la FIUBA](https://algori
 
 #### Maze plotter
 
+Dependencias:
+- [_Matplotlib_](https://matplotlib.org/)
+
 ```bash
  $ ./maze-plot.py TIPO-MAPA LABERINTO
 	
