@@ -6,13 +6,13 @@ Resolución del [TP2 de la materia TDA de la FIUBA](https://algoritmos-rw.github
 
 ```bash
  $ cd Parte-1
- $ cat README.md
+ $ less README.md
 ```
 
 ### Parte 2
 
 ```bash
  $ cd Parte-2
- $ cat README.md
+ $ less README.md
 ```
 
