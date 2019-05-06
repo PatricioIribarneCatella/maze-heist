@@ -12,7 +12,7 @@ class Visitors():
         return len(self._visitors)
 
     def copy(self):
-        return self._visitors.copy()
+        return (self._visitors.copy(), self.duration)
 
     def add(self, visitor): 
         self._visitors.add(visitor.name)
