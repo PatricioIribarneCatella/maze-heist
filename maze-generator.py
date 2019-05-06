@@ -4,7 +4,6 @@ import sys
 
 from dfs_maze import DFSMaze
 from dac_maze import DACMaze
-from maze_plot import plot
 
 FILE_OUTPUT = "mapa-laberinto.txt"
 DFS = "dfs"
@@ -25,9 +24,7 @@ def main(method, height, width):
 
     maze.create()
     
-    mazeStr = maze.toString()
-    write_maze(mazeStr)
-    plot(mazeStr)
+    write_maze(maze.toString()) 
 
 def parse_input(params):
 
