@@ -9,7 +9,6 @@ FILE_OUTPUT = "mapa-laberinto.txt"
 DFS = "dfs"
 DAC = "dyc"
 
-
 def write_maze(maze):
 
     with open(FILE_OUTPUT, "w") as f:

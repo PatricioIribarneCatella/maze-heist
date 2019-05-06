@@ -22,6 +22,25 @@ Resolución del [TP2 de la materia TDA de la FIUBA](https://algoritmos-rw.github
 	MAPA = "mapa-laberinto.txt" [default]
 ```
 
+#### Maze plotter
+
+```bash
+ $ ./maze-plot.py TIPO-MAPA LABERINTO
+	
+	TIPO-MAPA = ["m" | "s"]
+		- "m": mapa sin solucionar
+		- "s": mapa con solución
+	[Default]:
+		LABERINTO = "mapa-laberinto.txt" (si TIPO-MAPA == "m")
+		LABERINTO = "solucion-laberinto.txt" (si TIPO-MAPA == "s")
+```
+
+### Tests
+
+```bash
+ $ ./tester.sh
+```
+
 ### Clean
 
 ```bash
