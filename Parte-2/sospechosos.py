@@ -70,5 +70,8 @@ individuals_limits = [5,10]
 duration_limits = [40,120]
 
 if __name__ == "__main__":
-    find_suspects(sys.argv[1], "sospechosos.txt", *individuals_limits, *duration_limits)
+    find_suspects(sys.argv[1],
+                  "sospechosos.txt",
+                  *individuals_limits,
+                  *duration_limits)
 
