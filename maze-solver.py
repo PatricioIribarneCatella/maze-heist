@@ -3,6 +3,7 @@
 import sys
 
 from solver import MazeSolver
+from maze_plot import plot
 
 FILE_INPUT = "mapa-laberinto.txt"
 FILE_OUTPUT = "solucion-laberinto.txt"
@@ -17,8 +18,9 @@ def main(path):
     ms = MazeSolver(path)
 
     ms.solve()
-
-    write_maze(ms.toString())
+    mazeStr = ms.toString()
+    write_maze(mazeStr)
+    plot(mazeStr)
 
 def parse_input(params):
 
