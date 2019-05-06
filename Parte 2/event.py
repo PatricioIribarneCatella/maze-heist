@@ -18,4 +18,5 @@ class Event():
         return self._time
 
     def __repr__(self):
-        return "({0}, {1}, {2})".format(self.visitor, self.type, self.time) 
+        return "({0}, {1}, {2})".format(self.visitor, self.type, self.time)
+
