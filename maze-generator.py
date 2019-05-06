@@ -22,8 +22,8 @@ def main(method, height, width):
         maze = DACMaze(width, height)
 
     maze.create()
-
-    write_maze(maze.toString())
+    
+    write_maze(maze.toString()) 
 
 def parse_input(params):
 

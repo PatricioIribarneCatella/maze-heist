@@ -18,7 +18,7 @@ def main(path):
 
     ms.solve()
 
-    write_maze(ms.toString())
+    write_maze(ms.toString())   
 
 def parse_input(params):
 
