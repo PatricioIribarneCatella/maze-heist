@@ -21,7 +21,8 @@ class DFSMaze(MazeGraph):
 
         visited = {(i, j):False for j in range(self.width) for i in range(self.height)}
 
-        self.adjacency_lists = [[[] for j in range(self.width)] for i in range(self.height)] # Nothing is accesible at first
+        # Nothing is accesible at first
+        self.adjacency_lists = [[[] for j in range(self.width)] for i in range(self.height)] 
 
         # Obtains the DFS circuit (tree)
         # while removing the edges (walls)
